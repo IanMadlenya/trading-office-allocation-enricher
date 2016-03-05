@@ -1,44 +1,39 @@
 language: Java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 before_install:
-  - pip install --user codecov
-
+- pip install --user codecov
 after_success:
-  - codecov
-  - ./gradlew sonarqube
-
-# coverity scan
+- codecov
+- ./gradlew sonarqube
 env:
   global:
-    - secure: "A+JodfRzulrwez5TVSm2k1SQPxsis68gM22JN4nqjm4RgekfHnfWe5OoLYhdFuhgyzkUE7AnmkhcZCtYpl4/hCtRs4pZ+Hum4vtSh99dLaMOW3CpUzaBpWPtCcuEN2DP3v8hMAkbqiaSEYxfKM94CH3Ct+YH8xuaMvcYsuBRaFz2KSJXnfor+111VGGjoDSRFqMd6cpq4m0U22vUtyCBVeu8+HPRn3ySyafL7hNCBNyZgkp1KZZPD6RgzHPbjVKA9lBO27CnSBsp3uWHv5Zfee80JFsjIECRhR5djYI/mq3xtWTsdnIOTEjiT8ahwpxJBrAscapt8iTmZolaYLoe97JLFcU4qQLQGsdg6SRcCbpiTFyu7oMqcApxdb+6er9I5B4XVN329xpTZLYsMFZAzeqhZswYxAJiRPIzS79y/WFBNMwlHPHYZauAMZTPiWK/+8sr3hyrtSyuzMms3puBAAvjfDKWI4QOIoVMUxp+O3gTHi29/UpegFwgEOMYXd2CspQROx76zq0G5xGeGK5FSRnvaE27VKPKlBdyE9DT8AZxy1sP9pigHCt4E/dV+4lM5awCCCqCVP5//yFrCFiTb0vINkZjYOhuaqckkAeKRa8/yZnGeXbZ4ENL+ZqVL/PnOdqd4jCS3uTSuW2s4N5AC7bXtCuHtiEWNj/siEzndE0="
-
+  - secure: A+JodfRzulrwez5TVSm2k1SQPxsis68gM22JN4nqjm4RgekfHnfWe5OoLYhdFuhgyzkUE7AnmkhcZCtYpl4/hCtRs4pZ+Hum4vtSh99dLaMOW3CpUzaBpWPtCcuEN2DP3v8hMAkbqiaSEYxfKM94CH3Ct+YH8xuaMvcYsuBRaFz2KSJXnfor+111VGGjoDSRFqMd6cpq4m0U22vUtyCBVeu8+HPRn3ySyafL7hNCBNyZgkp1KZZPD6RgzHPbjVKA9lBO27CnSBsp3uWHv5Zfee80JFsjIECRhR5djYI/mq3xtWTsdnIOTEjiT8ahwpxJBrAscapt8iTmZolaYLoe97JLFcU4qQLQGsdg6SRcCbpiTFyu7oMqcApxdb+6er9I5B4XVN329xpTZLYsMFZAzeqhZswYxAJiRPIzS79y/WFBNMwlHPHYZauAMZTPiWK/+8sr3hyrtSyuzMms3puBAAvjfDKWI4QOIoVMUxp+O3gTHi29/UpegFwgEOMYXd2CspQROx76zq0G5xGeGK5FSRnvaE27VKPKlBdyE9DT8AZxy1sP9pigHCt4E/dV+4lM5awCCCqCVP5//yFrCFiTb0vINkZjYOhuaqckkAeKRa8/yZnGeXbZ4ENL+ZqVL/PnOdqd4jCS3uTSuW2s4N5AC7bXtCuHtiEWNj/siEzndE0=
 addons:
   coverity_scan:
-
     project:
       name: spolnik/trading-office
       version: 1.0
       description: Trading Office
-
     notification_email: jacek.spolnik@gmail.com
-
-    build_command_prepend: "./gradlew clean"
-
-    build_command: "./gradlew compileJava"
-
+    build_command_prepend: ./gradlew clean
+    build_command: ./gradlew compileJava
     branch_pattern: coverity_scan
-
 branches:
   only:
-    - master
-    - /^heroku-.*$/
-    - coverity_scan
+  - master
+  - /^heroku-.*$/
+  - coverity_scan
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+deploy:
+  provider: heroku
+  api_key:
+    secure: TmQB4TtcdtzRVqd0YkzqFvcy+pA1i0Yz95jrH87UQSSiLtGHu6Rwormfn1BLe667LozteyAIC0gxNvjv2z69VNCkyG+zjIaPIWw2kUV77EFeA+Gk4Kr8Yd4KssW5T1gnyMAlnbkG1Ns/ywruoFTpRwfCG9GyabNbDODE68dGP0fpZJh1idN5uP2Xy1APGso8AN86s/Zwpx8GWrF+WTpxuYL4GsEnjKRGISXMVf4uLDPKMqXQFQzNHQcZ8D1V839PbTqxRb4Swvkyfr3q8eUmNVQJPLOZ9m88idQUlWLwCsnz3AKo48D3Vhzv8nQv0KzplItf8iOnVFf4zdylh5poCGrsvCMoSK4HIqHs4zrDjZ7+U2GVcNwdx4yGdlAa0mz/DzuIIsewKVM6JTgn/8rF8keVk/wvLFb3TQTO6u6YZ/CpfakcmvcYCUOO3yv2Xe4Huq5IctpUNcsYioo4fXE5bAqZiyEgl23foy6LcYzODmolbBgMUexLUMGybVFNCPaJpJXp3J3KQk4unRaJzIJ57hcGR3M+g5SQVGj2VFJI0Vsd2aJ2xz+7QeteGopLnhhe45yKPDAohGSiRKvlHPSG/QM5fG16E2CtL3hVLotV+rtUqwlCKBKlljuEUCsA8BFyfFtASm8FNj4+mk/0Ls8UsV400JtQtfogDmiVJJibLfQ=
+  app: allocation-enricher
+  on:
+    repo: spolnik/trading-office-allocation-enricher
