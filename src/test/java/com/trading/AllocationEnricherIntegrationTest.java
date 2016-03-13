@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class AllocationEnricherIntegrationTest {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private CachingConnectionFactory connectionFactory;
+    private RabbitTemplate template;
 
     @Before
     public void setUp() throws Exception {
@@ -60,7 +60,7 @@ public class AllocationEnricherIntegrationTest {
     }
 
     private void setupRabbitMq() {
-        connectionFactory = new CachingConnectionFactory();
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
         connectionFactory.setUri("amqp://guest:guest@localhost");
 
         AmqpAdmin admin = new RabbitAdmin(connectionFactory);
@@ -71,12 +71,14 @@ public class AllocationEnricherIntegrationTest {
                 BindingBuilder.bind(queue).to(exchange)
                     .with("enriched.json.allocation.report")
         );
+
+        template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(new Jackson2JsonMessageConverter());
     }
 
     @Test
     public void receives_allocation_and_send_enriched_one() throws Exception {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(new Jackson2JsonMessageConverter());
+
 
         String allocationAsJson = OBJECT_MAPPER.writeValueAsString(TestData.allocation());
         template.convertAndSend("trading-office-exchange", "received.json.allocation.report", allocationAsJson);
