@@ -10,7 +10,9 @@ ext {
                 boot_amqp: 'org.springframework.boot:spring-boot-starter-amqp',
                 eureka_client: 'org.springframework.cloud:spring-cloud-starter-eureka',
                 feign: 'org.springframework.cloud:spring-cloud-starter-feign',
-                cloud_config: 'org.springframework.cloud:spring-cloud-starter-config'
+                cloud_config: 'org.springframework.cloud:spring-cloud-starter-config',
+                hystrix_dashboard: 'org.springframework.cloud:spring-cloud-starter-hystrix-dashboard',
+                hystrix: 'org.springframework.cloud:spring-cloud-starter-hystrix'
             ],
             test: [
                     junit: 'junit:junit:4.12',

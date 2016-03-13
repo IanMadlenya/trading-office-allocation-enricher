@@ -60,7 +60,9 @@ dependencies {
             libs.spring.feign,
             libs.jackson,
             libs.jackson_databind,
-            libs.jackson_annotations
+            libs.jackson_annotations,
+            libs.spring.hystrix_dashboard,
+            libs.spring.hystrix
 
     testCompile libs.test.junit,
             libs.test.assertj,
