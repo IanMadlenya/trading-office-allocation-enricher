@@ -196,4 +196,20 @@ public class EnrichedAllocation implements Serializable {
     public BigDecimal getInstrumentPrice() {
         return instrumentPrice;
     }
+
+    public void enrichWith(Instrument instrument) {
+        setInstrumentName(instrument.getName());
+        setInstrumentCurrency(instrument.getCurrency());
+        setInstrumentExchange(instrument.getExchange());
+        setInstrumentSymbol(instrument.getSymbol());
+        setInstrumentPrice(instrument.getPrice());
+    }
+
+    public void enrichWith(Exchange exchange) {
+        setCountry(exchange.getCountry());
+        setCountryCode(exchange.getCountryCode());
+        setExchangeAcronym(exchange.getAcronym());
+        setExchangeCity(exchange.getCity());
+        setExchangeName(exchange.getName());
+    }
 }

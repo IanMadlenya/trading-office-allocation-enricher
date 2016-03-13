@@ -12,7 +12,7 @@ public class AllocationEnricher {
         this.counterpartyClient = counterpartyClient;
     }
 
-    public EnrichedAllocation process(EnrichedAllocation allocationReport) throws IOException {
+    EnrichedAllocation process(EnrichedAllocation allocationReport) throws IOException {
 
         enrichWithInstrument(allocationReport);
         enrichWithExchange(allocationReport);
@@ -28,11 +28,7 @@ public class AllocationEnricher {
         );
 
         Instrument instrument = marketDataClient.getInstrument(instrumentDetails.getTicker());
-        allocationReport.setInstrumentName(instrument.getName());
-        allocationReport.setInstrumentCurrency(instrument.getCurrency());
-        allocationReport.setInstrumentExchange(instrument.getExchange());
-        allocationReport.setInstrumentSymbol(instrument.getSymbol());
-        allocationReport.setInstrumentPrice(instrument.getPrice());
+        allocationReport.enrichWith(instrument);
     }
 
     private InstrumentDetails requestInstrumentDetails(
@@ -52,11 +48,7 @@ public class AllocationEnricher {
                 allocationReport.getMicCode()
         );
 
-        allocationReport.setCountry(exchange.getCountry());
-        allocationReport.setCountryCode(exchange.getCountryCode());
-        allocationReport.setExchangeAcronym(exchange.getAcronym());
-        allocationReport.setExchangeCity(exchange.getCity());
-        allocationReport.setExchangeName(exchange.getName());
+        allocationReport.enrichWith(exchange);
     }
 
     private void enrichWithCounterparty(EnrichedAllocation allocationReport) {

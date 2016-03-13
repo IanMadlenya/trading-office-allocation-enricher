@@ -40,124 +40,124 @@ public class AllocationEnricherSpec {
     @Test(expected = IOException.class)
     public void throws_exception_if_cannot_return_instrument_details() throws Exception {
         when(marketDataClient.getInstrumentDetails(any())).thenReturn(null);
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
     }
 
     @Test
     public void uses_instruments_api_to_get_instrument_details() throws Exception {
 
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
         verify(marketDataClient).getInstrumentDetails("2000019");
     }
 
     @Test
     public void uses_instruments_api_to_get_instrument() throws Exception {
 
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
         verify(marketDataClient).getInstrument("AMZN");
     }
 
     @Test
     public void uses_counterparty_api_to_get_exchange() throws Exception {
 
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
         verify(counterpartyClient).getExchange("XNAS");
     }
 
     @Test
     public void uses_counterparty_api_to_get_counterparty() throws Exception {
 
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
         verify(counterpartyClient).getPartyName("CUSTUS");
     }
 
     @Test
     public void uses_counterparty_api_to_get_executing_party() throws Exception {
 
-        enricher.process(TestData.allocationReport());
+        enricher.process(TestData.allocation());
         verify(counterpartyClient).getPartyName("TROF");
     }
 
     @Test
     public void enriches_counterparty_name() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getCounterpartyName()).isEqualTo(PARTY_NAME);
     }
 
     @Test
     public void enriches_executing_party_name() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getExecutingPartyName()).isEqualTo(PARTY_NAME);
     }
 
     @Test
     public void enriches_exchange_name() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getExchangeName()).isEqualTo(TestData.exchange().getName());
     }
 
     @Test
     public void enriches_exchange_acronym() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getExchangeAcronym()).isEqualTo(TestData.exchange().getAcronym());
     }
 
     @Test
     public void enriches_exchange_city() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getExchangeCity()).isEqualTo(TestData.exchange().getCity());
     }
 
     @Test
     public void enriches_exchange_country_code() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getCountryCode()).isEqualTo(TestData.exchange().getCountryCode());
     }
 
     @Test
     public void enriches_exchange_country() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getCountry()).isEqualTo(TestData.exchange().getCountry());
     }
 
     @Test
     public void enriches_instrument_symbol() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getInstrumentSymbol()).isEqualTo(TestData.instrument().getSymbol());
     }
 
     @Test
     public void enriches_instrument_currency() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getInstrumentCurrency()).isEqualTo(TestData.instrument().getCurrency());
     }
 
     @Test
     public void enriches_instrument_exchange() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getInstrumentExchange()).isEqualTo(TestData.instrument().getExchange());
     }
 
     @Test
     public void enriches_instrument_price() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getInstrumentPrice()).isEqualTo(TestData.instrument().getPrice());
     }
 
     @Test
     public void enriches_instrument_name() throws Exception {
-        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocationReport());
+        EnrichedAllocation enrichedAllocation = enricher.process(TestData.allocation());
 
         assertThat(enrichedAllocation.getInstrumentName()).isEqualTo(TestData.instrument().getName());
     }

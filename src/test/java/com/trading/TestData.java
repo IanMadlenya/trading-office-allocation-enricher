@@ -3,16 +3,20 @@ package com.trading;
 import java.math.BigDecimal;
 
 class TestData {
-    static EnrichedAllocation allocationReport() {
-        EnrichedAllocation allocationReport = new EnrichedAllocation();
 
-        allocationReport.setAllocationId("1234567");
-        allocationReport.setSecurityId("2000019");
-        allocationReport.setCounterpartyId("CUSTUS");
-        allocationReport.setExecutingPartyId("TROF");
-        allocationReport.setMicCode("XNAS");
+    static final String COUNTERPARTY_NAME = "Customer Ltd.";
+    static final String EXECUTING_PARTY_NAME = "Trading Office Ltd.";
 
-        return allocationReport;
+    static EnrichedAllocation allocation() {
+        EnrichedAllocation allocation = new EnrichedAllocation();
+
+        allocation.setAllocationId("1234567");
+        allocation.setSecurityId("2000019");
+        allocation.setCounterpartyId("CUSTUS");
+        allocation.setExecutingPartyId("TROF");
+        allocation.setMicCode("XNAS");
+
+        return allocation;
     }
 
     static Instrument instrument() {
@@ -37,5 +41,15 @@ class TestData {
         exchange.setName("NASDAQ - ALL MARKETS");
 
         return exchange;
+    }
+
+    static EnrichedAllocation enrichedAllocation() {
+        EnrichedAllocation enrichedAllocation = allocation();
+        enrichedAllocation.enrichWith(exchange());
+        enrichedAllocation.enrichWith(instrument());
+        enrichedAllocation.setCounterpartyName(COUNTERPARTY_NAME);
+        enrichedAllocation.setExecutingPartyName(EXECUTING_PARTY_NAME);
+
+        return enrichedAllocation;
     }
 }

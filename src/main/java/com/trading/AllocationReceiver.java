@@ -23,8 +23,11 @@ public class AllocationReceiver {
     }
 
     public void handleMessage(String message) throws IOException {
-
         EnrichedAllocation allocation = fromJson(message);
+        handleMessage(allocation);
+    }
+
+    public void handleMessage(EnrichedAllocation allocation) throws IOException {
         LOG.info("Received: " + allocation.getAllocationId());
 
         EnrichedAllocation enrichedAllocation = allocationEnricher.process(allocation);
